@@ -15,3 +15,9 @@ project_root/
 ├── requirements.txt
 └── main.py
 ```
+
+### TODO List
+- [ ] Dataset Collection
+- [ ] Model Building
+- [ ] Training and Evaluation
+- [ ] Hyperparameter Tuning

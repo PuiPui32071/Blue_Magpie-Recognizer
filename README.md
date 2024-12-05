@@ -21,3 +21,4 @@ project_root/
 - [ ] Model Building
 - [ ] Training and Evaluation
 - [ ] Hyperparameter Tuning
+- [ ] UI Wrapping

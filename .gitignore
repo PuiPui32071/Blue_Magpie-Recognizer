@@ -1,0 +1,12 @@
+/.venv
+/.idea
+*.pyc
+__pycache__/
+.DS_Store
+msedgedriver
+
+# dataset
+raw_images/
+raw_images.zip
+dataset_1500/
+dataset_1500.zip

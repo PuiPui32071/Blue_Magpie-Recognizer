@@ -5,7 +5,7 @@
 - **台灣藍鵲 Taiwan Blue Magpie**(*Urocissa caerulea*) is the national bird of Taiwan, having striking blue plumage and a long tail.
 -  However, the suspected smuggling of the **紅嘴藍鵲 Red-billed Blue Magpie** (*Urocissa erythroryncha*) into Taiwan has led to a gradual expansion of its population in recent years, which threatens the habitat of the Taiwan Blue Magpie.
 -  We hope that through this project, more people will become aware of this issue and learn to recognize and distinguish between the two species.
-- ！[Difference](assets/difference.png)
+> ![Difference](assets/difference.png)
 ---
 - There are five kinds of blue magpies in the world:
     | Chinese Name   | English Name               |

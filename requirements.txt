@@ -4,3 +4,4 @@ pillow>=11.0.0
 selenium
 matplotlib==3.3.4
 tqdm
+torchinfo

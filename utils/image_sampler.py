@@ -6,16 +6,11 @@ from PIL import Image
 from tqdm import tqdm
 
 class ImageSampler:
-    """
-    Sample images from a directory and save them to a new directory.
-    """
-
     def __init__(self, dir: str, num_samples: int = 1500):
         self.dir = dir
         self.num_samples = num_samples
         self.transform = transforms.Compose([
             transforms.Resize(256),
-            # transforms.CenterCrop(256),
             transforms.RandomCrop(256),
             transforms.ToTensor(),
         ])
@@ -29,7 +24,6 @@ class ImageSampler:
             img_extentions = ['jpg', 'jpeg', 'png']
             images_paths = []
 
-            # walk through the directory and sample images
             for root, dirs, files in os.walk(os.path.join(self.dir, class_name)):
                 for file in files:
                     if file.endswith(tuple(img_extentions)):

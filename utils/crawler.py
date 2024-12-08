@@ -23,13 +23,10 @@ class EbirdCrawler:
         Scrape images from ebird.org
         """
 
-        # set up the webdriver
         driver = webdriver.Edge()
 
-        # open target website
         driver.get(self.url)
 
-        # define the selector of the load more button
         load_more_button_selector = '#content > div > div > form > div.pagination > button'
 
         count = 0
@@ -49,7 +46,6 @@ class EbirdCrawler:
         image_elements = driver.find_elements(By.TAG_NAME, 'img')
         self.download_img(image_elements)
         
-        # close the webdriver
         driver.quit()
 
     def download_img(self, image_elements):
@@ -57,7 +53,6 @@ class EbirdCrawler:
         download images with given image elements
         """
 
-        # create a directory to store images
         os.makedirs(f"raw_images/{self.class_name}", exist_ok=True)
         
         # download images

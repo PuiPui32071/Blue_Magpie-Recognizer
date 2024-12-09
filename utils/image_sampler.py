@@ -17,31 +17,54 @@ class ImageSampler:
 
     def sample_images(self):
         """
-        Random sampe and save images from the directory
+        Random sample and save images from the directory
         """
+        img_extensions = ['jpg', 'jpeg', 'png']
 
         for class_name in os.listdir(self.dir):
-            img_extentions = ['jpg', 'jpeg', 'png']
-            images_paths = []
+            class_dir = os.path.join(self.dir, class_name)
+            if not os.path.isdir(class_dir):
+                continue
 
-            for root, dirs, files in os.walk(os.path.join(self.dir, class_name)):
-                for file in files:
-                    if file.endswith(tuple(img_extentions)):
-                        # check if the image is valid
-                        try:
-                            with Image.open(os.path.join(root, file)) as img:
-                                img.verify()
-                            images_paths.append(os.path.join(root, file))
-                        except:
-                            # print(f"invalid image: {os.path.join(root, file)}")
-                            pass
+            images_paths = self._get_valid_image_paths(class_dir, img_extensions)
+            sampled_images = random.sample(images_paths, min(self.num_samples, len(images_paths)))
 
-                images_paths = random.sample(images_paths, self.num_samples)
+            output_dir = f"dataset_{self.num_samples}/{class_name}"
+            os.makedirs(output_dir, exist_ok=True)
 
-                if not os.path.exists(f"dataset_{self.num_samples}/{class_name}"):
-                    os.makedirs(f"dataset_{self.num_samples}/{class_name}", exist_ok=True)
-                
-                for i, img_path in tqdm(enumerate(images_paths)):
-                    img = Image.open(img_path)
-                    img = self.transform(img)
-                    vutils.save_image(img, f"dataset_{self.num_samples}/{class_name}/{str(i + 1).zfill(4)}.png")
+            for i, img_path in tqdm(enumerate(sampled_images), total=len(sampled_images), desc=f"Processing {class_name}"):
+                self._process_and_save_image(img_path, output_dir, i)
+
+    def _get_valid_image_paths(self, class_dir, img_extensions):
+        """
+        Get valid image paths
+        """
+        images_paths = []
+        for root, _, files in os.walk(class_dir):
+            for file in files:
+                if file.endswith(tuple(img_extensions)):
+                    img_path = os.path.join(root, file)
+                    if self._is_valid_image(img_path):
+                        images_paths.append(img_path)
+        return images_paths
+
+    def _is_valid_image(self, img_path):
+        """
+        Check if the image is valid
+        """
+        try:
+            with Image.open(img_path) as img:
+                img.verify()
+            return True
+        except (IOError, SyntaxError) as e:
+            # print(f"Invalid image: {img_path} - {e}")
+            return False
+
+    def _process_and_save_image(self, img_path, output_dir, index):
+        """
+        Process and save the image
+        """
+        img = Image.open(img_path)
+        img = self.transform(img)
+        output_path = os.path.join(output_dir, f"{str(index + 1).zfill(4)}.png")
+        vutils.save_image(img, output_path)

@@ -21,7 +21,7 @@
 - [x] Dataset Preparation (using Selenium)
 - [ ] Model Building (using PyTorch)
 - [ ] Training and Evaluation (using PyTorch)
-- [ ] Hyperparameter Tuning (using Optuna)
+- [ ] Hyperparameter Tuning
 - [ ] Model Visualization (using Captum)
 - [ ] UI Wrapping (using Gradio)
 
@@ -44,17 +44,14 @@
 3. Install required packages:
     ```bash
     conda install pytorch==2.5.0 torchvision==0.20.0 torchaudio==2.5.0  pytorch-cuda=11.8 -c pytorch -c nvidia
-    conda install selenium matplotlib==3.3.4 tqdm
+    conda install selenium matplotlib==3.3.4 tqdm torchinfo tensorborad
     ```
-4. Download the webdriver:
-    - To properly run selenium, the webdriver matched to your browser is needed.
-    - Once downloaded, place the webdriver in the root directory.
 
 ## 📁 Dataset Preparation
 ### Option 1: Use Our Dataset
-- If you want to use our proposed dataset, please [click here](https://drive.google.com/drive/folders/1E_pRJGIzvn5IInmIfg55CrSge5gsOnGE?usp=drive_link) to download.
+- If you want to use our proposed dataset, please [click here](https://drive.google.com/drive/folders/1E_pRJGIzvn5IInmIfg55CrSge5gsOnGE?usp=drive_link) to download `dataset_1500.zip`.
 - Extract `dataset_1500.zip` to the root directory.
-- It contains three different types of blue magpies, with each class having 1500 images sized 256x256.
+- It contains three different types of blue magpies images, with each class having `1500` images sized `256x256`.
 - We also provide `raw_images.zip` for additional sampling options.
 ```
 ├── dataset_1500
@@ -72,15 +69,33 @@
 │       └── ...
 ```
 ### Option 2: Use Custom Dataset
-- To use a custom dataset, you can modify ```download_raw_images.py```, then run the script to get the bird dataset you want.
-- Note that you must pass the [media.ebird.org](https://media.ebird.org/catalog?taxonCode=formag1&mediaType=photo) URL with the specific species to the ```EbirdCrawler``` class so that the crawler can work properly.
-- After that, run prepare_dataset.py to sample your custom dataset.
+- To run Selenium properly, you need a driver that matches your browser, eg., [Chrome](https://developer.chrome.com/docs/chromedriver/downloads?hl=zh-tw).
+- Once downloaded, place the driver in the root directory.
+- Then, modify `prepare_dataset.ipynb` and run the script to get the bird dataset you want.
+- Note that you must pass the [media.ebird.org](https://media.ebird.org/catalog?taxonCode=formag1&mediaType=photo) URL with the specific species to the `EbirdCrawler` class so that the crawler can work properly.
+```
+├── dataset_<num_of_images>
+│   ├── <spicies-1>
+│   │   ├── 1.png
+│   │   ├── 2.png
+│   │   └── ...
+│   ├── <spicies-2>
+│   │   ├── 1.png
+│   │   ├── 2.png
+│   │   └── ...
+│   └── <spicies-3>
+│   │   ├── 1.png
+│   │   ├── 2.png
+│   │   └── ...
+│   ... 
+```
 
-## 🏋️ Traning
-- working...
+## 🏋️ Training
+- The `pipeline.ipynb` includes all the steps to construct and train our blue magpie recognizer. Just run it and have fun.
+- Additionally, you can build your own model and save it in the `models` folder. Then, you can import it in the `Build CNN Model` block and train it.
 
 ## 🧪 Testing
-- working...
+- To properly inspect the training details, we automatically save the TensorBoard logs in the `runs` folder and the model checkpoints in the `ckpts` folder.You can check them with TensorBoard and load the pre-trained model.
 
 ### 🌟 Acknowledgement
 - Thanks to [eBird.org](https://ebird.org/home) for providing such a platform with many valuable statistics for educational purposes :).

@@ -116,8 +116,12 @@ def get_pred_prob(model, images, idx, device):
     """
     model.eval()
     outputs = model(images.to(device))
-    _, preds = torch.max(outputs, 1)
-    probs = F.softmax(outputs, 1)
-    max_probs, _ = torch.max(probs, 1)
+
+    outputs = F.softmax(outputs, 1)
+    max_probs, preds = torch.max(outputs, 1)
+    
+    # _, preds = torch.max(outputs, 1)
+    # probs = F.softmax(outputs, 1)
+    # max_probs, _ = torch.max(probs, 1)
     
     return preds[idx].item(), max_probs[idx].item()

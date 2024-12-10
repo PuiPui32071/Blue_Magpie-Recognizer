@@ -1,1 +1,1 @@
-from . import simple_cnn
+from .simple_cnn import SimpleCNN

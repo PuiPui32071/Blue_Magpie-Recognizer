@@ -3,3 +3,5 @@ matplotlib==3.3.4
 tqdm
 torchinfo
 tensorboard
+captum
+ipywidgets

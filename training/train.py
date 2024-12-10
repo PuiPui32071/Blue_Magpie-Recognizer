@@ -26,6 +26,7 @@ def train_one_epoch(model, train_loader, optimizer, criterion, device, writer, e
     epoch_acc = correct / total
     writer.add_scalar('Loss/train', epoch_loss, epoch + 1)
     writer.add_scalar('Accuracy/train', epoch_acc, epoch + 1)
+
     return epoch_loss, epoch_acc
 
 def validate_one_epoch(model, val_loader, criterion, device, writer, epoch):
@@ -48,6 +49,7 @@ def validate_one_epoch(model, val_loader, criterion, device, writer, epoch):
     val_acc = correct / total
     writer.add_scalar('Loss/val', val_loss, epoch + 1)
     writer.add_scalar('Accuracy/val', val_acc, epoch + 1)
+
     return val_loss, val_acc
 
 def train(model, train_loader, val_loader, optimizer, criterion, save_name, device, epochs=10):
@@ -55,8 +57,9 @@ def train(model, train_loader, val_loader, optimizer, criterion, save_name, devi
     train_acc = []
     val_loss = []
     val_acc = []
+    best_val_loss = float('inf')
     best_val_acc = 0.0
-
+    
     if not os.path.exists('ckpts'):
         os.makedirs('ckpts')
 
@@ -75,10 +78,17 @@ def train(model, train_loader, val_loader, optimizer, criterion, save_name, devi
         val_acc.append(val_epoch_acc)
         print(f"Val Loss: {val_epoch_loss:.4f}, Val Acc: {val_epoch_acc:.4f}")
 
+        if val_epoch_loss < best_val_loss:
+            best_val_loss = val_epoch_loss
+            torch.save(model.state_dict(), f"ckpts/{save_name}_best_val_loss.pth")
+            print(f"Saved Best Model with Val Loss: {best_val_loss:.4f}")
+        
         if val_epoch_acc > best_val_acc:
             best_val_acc = val_epoch_acc
-            torch.save(model.state_dict(), f"ckpts/{save_name}.pth")
+            torch.save(model.state_dict(), f"ckpts/{save_name}_best_val_acc.pth")
             print(f"Saved Best Model with Val Acc: {best_val_acc:.4f}")
+
+        writer.flush()
 
     writer.close()
     return train_loss, train_acc, val_loss, val_acc

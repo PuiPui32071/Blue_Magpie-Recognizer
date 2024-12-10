@@ -17,3 +17,6 @@ ckpts/
 
 # tensorboard logs
 runs/
+
+# gradio
+.gradio/

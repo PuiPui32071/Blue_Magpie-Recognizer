@@ -27,7 +27,7 @@
 
 ## 🎬 How to Start
 ### Prerequisites
-- Python 3.9.x
+- Python 3.10.x
 - PyTorch 2.15.x
 - CUDA 11.8
 
@@ -38,14 +38,20 @@
     ```
 2. Create a conda environment:
     ```bash
-    conda create -name bmr python=3.9.20
+    conda create -n bmr python==3.10.15
     conda activate bmr
     ```
 3. Install required packages:
     ```bash
     conda install pytorch==2.5.0 torchvision==0.20.0 torchaudio==2.5.0  pytorch-cuda=11.8 -c pytorch -c nvidia
-    conda install selenium matplotlib==3.3.4 tqdm torchinfo tensorborad
+    conda install selenium tqdm torchinfo tensorboard ipywidgets
+    conda install captum matplotlib==3.4.3 -c conda-forge
+    pip install gradio
+    
+    conda install libpng jpeg (for macOS)
+    pip install sympy==1.13.1 (if needed)
     ```
+    
 
 ## 📁 Dataset Preparation
 ### Option 1: Use Our Dataset

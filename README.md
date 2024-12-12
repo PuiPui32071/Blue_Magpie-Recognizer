@@ -127,7 +127,6 @@ In this project, we selected three species with similar appearances: **Taiwan Bl
 - You can run the `captum.ipynb` to see how the model interprets images. We use the method called **Occlusion Attribution** to show the important areas in the image. The darker green areas indicate that the model relies more on those areas to distinguish the bird.
 
 ## 🖥️ Gradio App
-## 🖥️ Gradio App
 - It is inconvenient to change the image path in the code and run it every time we want to make a prediction. Therefore, we built a Gradio app that allows you to drag an image and immediately see the prediction and Captum heatmap.
 - By running `gradio_app.ipynb`, you can access the testing interface in your browser.
 

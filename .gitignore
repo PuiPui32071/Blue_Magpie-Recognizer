@@ -13,10 +13,10 @@ dataset_1500/
 dataset_1500.zip
 
 # checkpoints
-ckpts/
+# ckpts/
 
 # tensorboard logs
-runs/
+# runs/
 
 # gradio
 .gradio/

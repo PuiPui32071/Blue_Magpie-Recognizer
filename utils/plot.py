@@ -27,7 +27,7 @@ def plot_single(image, label, label_map, mean, std,):
     )
     plt.show()
 
-def plot_batch(images, labels, label_map, mean, std, nrow=8):
+def plot_batch(images, labels, label_map, mean, std, ncol=4):
     """
     Display a batch of images from model using subplots
     """
@@ -40,20 +40,18 @@ def plot_batch(images, labels, label_map, mean, std, nrow=8):
     npimgs = images.permute(0, 2, 3, 1).numpy()
     npimgs = np.clip(npimgs, 0, 1)
 
-    ncol = (len(images) + nrow - 1) // nrow
-    fig, axes = plt.subplots(nrow, ncol, figsize=(15, 35))
+    nrow = (len(images) + ncol - 1) // ncol
+    fig, axes = plt.subplots(nrow, ncol, figsize=(ncol * 5, nrow * 5))
     axes = axes.flatten()
 
-    for idx, ax in enumerate(axes):
-        if idx >= len(images):
-            ax.axis('off')
-            continue
-
-        ax.imshow(npimgs[idx])
+    for idx, image in enumerate(npimgs):
+        ax = axes[idx]
+        ax.imshow(image)
         ax.axis('off')
         ax.set_title(
             f"label: {label_map[labels[idx].item()]}"
         )
+    
     plt.show()
 
 
@@ -80,7 +78,7 @@ def plot_single_pred(model, image, label, label_map, mean, std, device):
     )
     plt.show()
 
-def plot_batch_pred(model, images, labels, label_map, mean, std, device, nrow=8):
+def plot_batch_pred(model, images, labels, label_map, mean, std, device, ncol=4):
     """
     Display a batch of images and predictions from model using subplots
     """
@@ -89,25 +87,24 @@ def plot_batch_pred(model, images, labels, label_map, mean, std, device, nrow=8)
         std=[1/s for s in std]
     )
 
-    images = denormalize(images)
-    npimgs = images.permute(0, 2, 3, 1).numpy()
-    npimgs = np.clip(npimgs, 0, 1)
-
-    ncol = (len(images) + nrow - 1) // nrow
-    fig, axes = plt.subplots(nrow, ncol, figsize=(15, 35))
+    nrow = (len(images) + ncol - 1) // ncol
+    fig, axes = plt.subplots(nrow, ncol, figsize=(ncol * 5, nrow * 5))
     axes = axes.flatten()
 
-    for idx, ax in enumerate(axes):
-        if idx >= len(images):
-            ax.axis('off')
-            continue
-
+    for idx, image in enumerate(images):
         pred, prob = get_pred_prob(model, images, idx, device)
-        ax.imshow(npimgs[idx])
+
+        image = denormalize(image)
+        npimg = image.permute(1, 2, 0).numpy()
+        npimg = np.clip(npimg, 0, 1)
+
+        ax = axes[idx]
+        ax.imshow(npimg)
         ax.axis('off')
         ax.set_title(
             f"{label_map[pred]}: {prob * 100:.2f}%\n(label: {label_map[labels[idx].item()]})"
         )
+
     plt.show()
 
 def get_pred_prob(model, images, idx, device):
@@ -115,13 +112,10 @@ def get_pred_prob(model, images, idx, device):
     Get prediction and probability from model
     """
     model.eval()
-    outputs = model(images.to(device))
+    with torch.no_grad():
+        outputs = model(images.to(device))
 
     outputs = F.softmax(outputs, 1)
     max_probs, preds = torch.max(outputs, 1)
-    
-    # _, preds = torch.max(outputs, 1)
-    # probs = F.softmax(outputs, 1)
-    # max_probs, _ = torch.max(probs, 1)
     
     return preds[idx].item(), max_probs[idx].item()

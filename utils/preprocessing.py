@@ -61,16 +61,30 @@ def split_dataset(
 
     return train_dataset, val_dataset, test_dataset
 
-def get_mean_std(dataset_dir: str = 'dataset_1500'):
+def get_mean_std(
+        dataset_dir: str = 'dataset_1500',
+        split_ratio: list = [0.7, 0.15, 0.15],
+        random_seed: int = 2024,
+        ):
     """
-    Calculate the mean and std of the dataset
+    Calculate the mean and std of the train dataset
     """
 
     transform = transforms.Compose([
         transforms.ToTensor(),
     ])
     dataset = datasets.ImageFolder(root=dataset_dir, transform=transform)
-    dataset_loader = DataLoader(dataset, batch_size=32, shuffle=False)
+
+    train_ratio, val_ratio, test_ratio = split_ratio
+    train_size = int(train_ratio * len(dataset))
+    val_size = int(val_ratio * len(dataset))
+    test_size = int(test_ratio * len(dataset))
+    
+    torch.manual_seed(random_seed)
+
+    train_dataset, _, _ = torch.utils.data.random_split(dataset, [train_size, val_size, test_size])
+
+    dataset_loader = DataLoader(train_dataset, batch_size=32, shuffle=False)
 
     mean = 0.0
     std = 0.0

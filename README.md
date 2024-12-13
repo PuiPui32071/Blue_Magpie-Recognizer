@@ -24,15 +24,15 @@ In this project, we selected three species with similar appearances: **Taiwan Bl
 - [x] Dataset Preparation (using Selenium)
 - [x] Model Building (using PyTorch)
 - [x] Training and Evaluation (using PyTorch)
-- [x] Hyperparameter Tuning
+- [x] Hyperparameter Tuning (using TensorBoard)
 - [x] Model Visualization (using Captum)
 - [x] UI Wrapping (using Gradio)
 
 ## 🎬 How to Start
 ### Prerequisites
-- Python 3.10.x
-- PyTorch 2.5.x
-- CUDA 11.8
+- Python >= 3.10
+- PyTorch >= 2.0
+- CUDA
 
 ### Environment Setup
 1. Clone this repository:
@@ -51,6 +51,7 @@ In this project, we selected three species with similar appearances: **Taiwan Bl
     conda install selenium tqdm torchinfo tensorboard ipywidgets
     conda install captum matplotlib==3.4.3 -c conda-forge
     pip install gradio
+
     conda install libpng jpeg  # for macOS
     pip install sympy==1.13.1  # if needed
     ```
@@ -101,36 +102,55 @@ In this project, we selected three species with similar appearances: **Taiwan Bl
 ```
 
 ## 🏋️ Training
+### Model We Used
 - To lower the cost of training and achieve maximum accuracy, we use the Pre-Trained **EfficientNetV2_s** from the paper: [EfficientNetV2: Smaller Models and Faster Training](https://arxiv.org/abs/2104.00298), and fine-tune it with our dataset.
+
+### Start Training
 - The `pipeline.ipynb` includes all the steps to construct and train our blue magpie recognizer. Just run it and have fun.
 - Additionally, you can build your own model and save it in the `models` folder. Then, you can import it in the block and train it.
 - During the program's execution, it automatically saves the TensorBoard logs in the `runs` folder, which you can use for better inspection.
-- If you just want to do testing, we provide checkpoints in the `ckpts/effv2s_bn_0.001_10_0.5` folder. You can directly load the pre-trained model and use it.
+
+### Model Checkpoints
+- If you just want to do testing, we provide two checkpoints in the `ckpts/effv2s_bn_si_0.001_10_0.5` folder.
+- In there, one has the minimum validation loss, another has the highest validation accuracy. You can directly load the pre-trained model and use it.
 
 ## 🧪 Testing
-- When training is done, the last 4 blocks in `pipeline.ipynb` show the training graphs, test images results, and some basic metrics to evaluate the model.
+- When training is done, you can run `evaluation.ipynb` to check the performance of your model.
 
-## ✔︎ Our Test Result
-- Our trained model achieved nearly 95% accuracy on the test set.
-
+## ✅ Evaluation
+- Our trained model achieved 95% accuracy on the test dataset, which is beyond our expectation.
+- **Minimum loss:**
     | Class                        | Precision | Recall | F1-Score | Support |
     |------------------------------|-----------|--------|----------|---------|
-    | Red-billed-blue-magpie       | 0.9328    | 0.9289 | 0.9308   | 239     |
-    | Taiwan-blue-magpie           | 0.9447    | 0.9610 | 0.9528   | 231     |
-    | Yellow-billed-blue-magpie    | 0.9604    | 0.9463 | 0.9533   | 205     |
-    | **Accuracy**                 |           |        | 0.9452   | 675     |
-    | **Macro Avg**                | 0.9459    | 0.9454 | 0.9456   | 675     |
-    | **Weighted Avg**             | 0.9452    | 0.9452 | 0.9452   | 675     |
+    | red-billed-blue-magpie       | 0.9607    | 0.9205 | 0.9402   | 239     |
+    | taiwan-blue-magpie           | 0.9494    | 0.9740 | 0.9615   | 231     |
+    | yellow-billed-blue-magpie    | 0.9378    | 0.9561 | 0.9469   | 205     |
+    | **Accuracy**                 |           |        | 0.9496   | 675     |
+    | **Macro Avg**                | 0.9493    | 0.9502 | 0.9495   | 675     |
+    | **Weighted Avg**             | 0.9499    | 0.9496 | 0.9495   | 675     |
+- **Highest accuracy:**
+    | Class                        | Precision | Recall | F1-Score | Support |
+    |------------------------------|-----------|--------|----------|---------|
+    | red-billed-blue-magpie       | 0.9696    | 0.9331 | 0.9510   | 239     |
+    | taiwan-blue-magpie           | 0.9567    | 0.9567 | 0.9567   | 231     |
+    | yellow-billed-blue-magpie    | 0.9346    | 0.9756 | 0.9547   | 205     |
+    | **Accuracy**                 |           |        | 0.9541   | 675     |
+    | **Macro Avg**                | 0.9536    | 0.9551 | 0.9541   | 675     |
+    | **Weighted Avg**             | 0.9545    | 0.9541 | 0.9540   | 675     |
+
 
 ## 👀 Model Interpretability
 - As mentioned in the Abstract, our goal is to differentiate three types of blue magpies. The question is, does the model distinguish them as we do?
-- You can run the `captum.ipynb` to see how the model interprets images. We use the method called **Occlusion Attribution** to show the important areas in the image. The darker green areas indicate that the model relies more on those areas to distinguish the bird.
+- You can run the `captum.ipynb` to see how the model interprets images. We use the method called **Occlusion Attribution** to show the important areas in the image.
+- The darker green areas indicate that the model relies more on those areas to distinguish the bird.
+> ![captum](assets/captum.png)
 
 ## 🖥️ Gradio App
 - It is inconvenient to change the image path in the code and run it every time we want to make a prediction. Therefore, we built a Gradio app that allows you to drag an image and immediately see the prediction and Captum heatmap.
 - By running `gradio_app.ipynb`, you can access the testing interface in your browser.
+> ![gradio](assets/gradio.png)
 
-### 🌟 Acknowledgement
+## 🌟 Acknowledgement
 - Thanks to [eBird.org](https://ebird.org/home) for providing such a platform with many valuable statistics for educational purposes :).
 - Special thanks to the eBird team for their continuous efforts in maintaining and updating the database.
 - We also appreciate the contributions of all the bird watchers and photographers who have shared their observations and images on eBird.

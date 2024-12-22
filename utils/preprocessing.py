@@ -36,7 +36,7 @@ def split_dataset(
         test_transform,
         split_ratio: list = [0.7, 0.15, 0.15],
         random_seed: int = 2024,
-        ):
+    ):
     """
     Split the dataset into train, validation, and test sets
     """
@@ -65,7 +65,7 @@ def get_mean_std(
         dataset_dir: str = 'dataset_1500',
         split_ratio: list = [0.7, 0.15, 0.15],
         random_seed: int = 2024,
-        ):
+    ):
     """
     Calculate the mean and std of the train dataset
     """

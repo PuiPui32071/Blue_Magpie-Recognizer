@@ -1,5 +1,5 @@
 # Blue_Magpie-Recognizer
-**The Final Project For Course: Introduction to Computer Vision and Its Applications.**
+**Final Project For Course: Introduction to Computer Vision and Its Applications.**
 
 ## 🔖 Abstract
 - **台灣藍鵲 Taiwan Blue Magpie** (*Urocissa caerulea*) is the national bird of Taiwan, known for its striking blue plumage and long tail.
@@ -31,7 +31,7 @@ In this project, we selected three species with similar appearances: **Taiwan Bl
 ## 🎬 How to Start
 ### Prerequisites
 - Python >= 3.10
-- PyTorch >= 2.0
+- PyTorch >= 2.5
 - CUDA
 
 ### Environment Setup
@@ -41,19 +41,21 @@ In this project, we selected three species with similar appearances: **Taiwan Bl
     ```
 2. Create a conda environment:
     ```bash
-    conda create -n bmr python==3.10.15
+    conda create -n bmr python==3.10.16
     conda activate bmr
     ```
 3. Install required packages:
+   - macOS
+    ```bash
+    conda install pytorch==2.5.0 torchvision==0.20.0 torchaudio==2.5.0 scikit-learn -c pytorch
+    conda install captum==0.7 ipykernel ipywidgets matplotlib selenium tensorboard tqdm
+    pip install gradio
+    ```
+    - Linux and Windows
     ```bash
     conda install pytorch==2.5.0 torchvision==0.20.0 torchaudio==2.5.0 pytorch-cuda=11.8 -c pytorch -c nvidia
-    conda install scikit-learn
-    conda install selenium tqdm torchinfo tensorboard ipywidgets
-    conda install captum matplotlib==3.4.3 -c conda-forge
+    conda install captum==0.7 ipykernel ipywidgets matplotlib selenium tensorboard tqdm
     pip install gradio
-
-    conda install libpng jpeg  # for macOS
-    pip install sympy==1.13.1  # if needed
     ```
 
 ## 📁 Dataset Preparation

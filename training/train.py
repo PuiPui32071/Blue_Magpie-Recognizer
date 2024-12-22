@@ -41,6 +41,7 @@ def validate_one_epoch(model, val_loader, criterion, device, writer, epoch):
             outputs = model(images)
             loss = criterion(outputs, labels)
             running_loss += loss.item()
+            
             _, predicted = torch.max(outputs, 1)
             total += labels.size(0)
             correct += (predicted == labels).sum().item()

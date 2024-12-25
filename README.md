@@ -1,5 +1,5 @@
-# Blue_Magpie-Recognizer
-**Final Project For Course: Introduction to Computer Vision and Its Applications.**
+# 🦜 Blue Magpie Recognizer
+**Final Project For Course: `Introduction to Computer Vision and Its Applications`.**
 
 ## 🔖 Abstract
 - **台灣藍鵲 Taiwan Blue Magpie** (*Urocissa caerulea*) is the national bird of Taiwan, known for its striking blue plumage and long tail.
@@ -28,7 +28,11 @@ In this project, we selected three species with similar appearances: **Taiwan Bl
 - [x] Model Visualization (using Captum)
 - [x] UI Wrapping (using Gradio)
 
-## 🎬 How to Start
+## 👥 Contributors
+- **[王文和](https://github.com/wangwenho)** - Dataset Preparation, Frontend Interface Development
+- **[李崑銘](https://github.com/PuiPui32071)** - Model Selection, Fine-tuning, and Optimization
+
+## 🚀 Getting Started
 ### Prerequisites
 - Python >= 3.10
 - PyTorch >= 2.5
@@ -108,7 +112,7 @@ In this project, we selected three species with similar appearances: **Taiwan Bl
 - To lower the cost of training and achieve maximum accuracy, we use the Pre-Trained **EfficientNetV2_s** from the paper: [EfficientNetV2: Smaller Models and Faster Training](https://arxiv.org/abs/2104.00298), and fine-tune it with our dataset.
 
 ### Start Training
-- The `pipeline.ipynb` includes all the steps to construct and train our blue magpie recognizer. Just run it and have fun.
+- The `train_model.ipynb` includes all the steps to construct and train our blue magpie recognizer. Just run it and have fun.
 - Additionally, you can build your own model and save it in the `models` folder. Then, you can import it in the block and train it.
 - During the program's execution, it automatically saves the TensorBoard logs in the `runs` folder, which you can use for better inspection.
 
@@ -117,9 +121,9 @@ In this project, we selected three species with similar appearances: **Taiwan Bl
 - In there, one has the minimum validation loss, another has the highest validation accuracy. You can directly load the pre-trained model and use it.
 
 ## 🧪 Testing
-- When training is done, you can run `evaluation.ipynb` to check the performance of your model.
+- When training is done, you can run `eval_model.ipynb` to check the performance of your model.
 
-## ✅ Evaluation
+## 📈 Evaluation
 - Our trained model achieved 95% accuracy on the test dataset, which is beyond our expectation.
 - **Minimum loss:**
     | Class                        | Precision | Recall | F1-Score | Support |
@@ -153,6 +157,6 @@ In this project, we selected three species with similar appearances: **Taiwan Bl
 > ![gradio](assets/gradio.png)
 
 ## 🌟 Acknowledgement
-- Thanks to [eBird.org](https://ebird.org/home) for providing such a platform with many valuable statistics for educational purposes :).
+- Thanks to [eBird.org](https://ebird.org/home) for providing such a platform with many valuable statistics for educational purposes :)
 - Special thanks to the eBird team for their continuous efforts in maintaining and updating the database.
 - We also appreciate the contributions of all the bird watchers and photographers who have shared their observations and images on eBird.
